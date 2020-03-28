@@ -1,12 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Hallo</h1>
-    <p><a href="{{ url_for('brommel') }}"> Aktuelle Brommelfotos</a></p>
-    <p><a href="{{ url_for('berlin') }}"> Briefmarken Berlin</a></p>
-    <p><a href="{{ url_for('altdeutschland') }}"> Briefmarken Altdeutschland</a></p>
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Task Master</h1>
+    {% if tasks|length < 1 %}
+    <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <div class="form">
+        <form action="/" method="POST">
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Add Task">
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
-from flask import Flask, url_for, render_template
-from app import app
+from flask import Flask, url_for, render_template, request, redirect
+from app import app, Todo, db
 
 
 Marken = [
@@ -22,10 +22,23 @@ Marken = [
     ]
 
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    return render_template('home.html')
+    if request.method == 'POST':
+        task_content = request.form['content']
+        new_task = Todo(content=task_content)
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue adding your task'
+
+    else:
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        return render_template('home.html', tasks=tasks)
+
 
 @app.route("/Brommel")
 def brommel():

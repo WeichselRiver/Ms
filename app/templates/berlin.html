@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1> Berlin </h1>  
+    {% for Marke in Marken %}
+        <p>MichNr.:  {{ Marke['MichNr'] }} </p>
+    {% endfor %}
+{% endblock %}

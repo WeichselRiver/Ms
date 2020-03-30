@@ -26,7 +26,8 @@ Marken = [
 def home():
     if request.method == 'POST':
         task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        BackMichNr = request.form['MichNr']
+        new_task = Todo(content=task_content, MichNr = BackMichNr)
 
         try:
             db.session.add(new_task)
